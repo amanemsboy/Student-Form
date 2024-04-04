@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outstanding Student Form</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  body {
+    background-color: #f3f4f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .form-label {
+    font-weight: bold;
+  }
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  .form-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9fafb;
+    transition: border-color 0.3s ease;
+  }
+  .form-select:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  .form-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .form-submit:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2 class="form-header text-3xl font-bold text-gray-800">Outstanding Student Form</h2>
+  <form id="studentForm">
+    <div>
+      <label for="student_name" class="form-label text-gray-700">Name:</label>
+      <input type="text" id="student_name" name="student_name" class="form-input" required>
+    </div>
+    <div>
+      <label for="student_age" class="form-label text-gray-700">Age:</label>
+      <input type="text" id="student_age" name="student_age" class="form-input" required>
+    </div>
+    <div>
+      <label for="student_gender" class="form-label text-gray-700">Gender:</label>
+      <select id="student_gender" name="student_gender" class="form-select" required>
+        <option value="" disabled selected>Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+    <div>
+      <label for="student_grade" class="form-label text-gray-700">Grade:</label>
+      <input type="text" id="student_grade" name="student_grade" class="form-input" required>
+    </div>
+    <div>
+      <label for="course_name" class="form-label text-gray-700">Course Name:</label>
+      <input type="text" id="course_name" name="course_name" class="form-input" required>
+    </div>
+    <div>
+      <label for="credit_hours" class="form-label text-gray-700">Credit Hours:</label>
+      <input type="text" id="credit_hours" name="credit_hours" class="form-input" required>
+    </div>
+    <div>
+      <label for="instructor_name" class="form-label text-gray-700">Instructor Name:</label>
+      <input type="text" id="instructor_name" name="instructor_name" class="form-input" required>
+    </div>
+    <div>
+      <label for="total_credit_hours" class="form-label text-gray-700">Total Credit Hours:</label>
+      <input type="text" id="total_credit_hours" name="total_credit_hours" class="form-input" required>
+    </div>
+    <button type="button" id="submitButton" class="form-submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('submitButton').addEventListener('click', () => {
+    const formData = {
+      student: {
+        student_name: document.getElementById('student_name').value,
+        student_age: document.getElementById('student_age').value,
+        student_gender: document.getElementById('student_gender').value,
+        student_grade: document.getElementById('student_grade').value
+      },
+      course: {
+        course_name: document.getElementById('course_name').value,
+        credit_hours: document.getElementById('credit_hours').value
+      },
+      instructor: {
+        instructor_name: document.getElementById('instructor_name').value,
+        total_credit_hours: document.getElementById('total_credit_hours').value
+      }
+    };
+    fetch('http://localhost/student-info', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text();
+    })
+    .then(data => {
+      alert(data);
+      document.getElementById('studentForm').reset(); // Clear form fields after successful submission
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error submitting form');
+      // Handle error, display error message, etc.
+    });
+  });
+</script>
+
+</body>
+</html>

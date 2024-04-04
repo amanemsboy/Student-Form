@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Students</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  .student-card {
+    transition: transform 0.3s ease;
+  }
+  .student-card:hover {
+    transform: translateY(-5px);
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-purple-500 to-pink-500 min-h-screen flex justify-center items-center">
+<div class="container mx-auto">
+  <h2 class="text-4xl font-bold mb-8 text-white text-center">List of Students</h2>
+  <div id="studentList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</div>
+
+<script>
+  // Fetch data from server and populate HTML list
+  fetch('http://localhost:3000/department-info')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const studentList = document.getElementById('studentList');
+      data.forEach(student => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('student-card', 'bg-white', 'p-6', 'rounded-lg', 'shadow-lg', 'text-center', 'cursor-pointer', 'transition-all', 'duration-300');
+        listItem.innerHTML = `
+          <p class="text-2xl font-semibold text-gray-800 mb-2">${student.student_name}</p>
+          <p class="text-gray-600 mb-4">${student.student_gender}, Age: ${student.student_age}, Grade: ${student.student_grade}</p>
+          <p class="text-lg font-semibold mb-1">Course: ${student.course_name}</p>
+          <p class="text-lg mb-4">Instructor: ${student.instructor_name}</p>
+          <a href="#" class="text-blue-500 hover:text-blue-700">View Details</a>
+        `;
+        listItem.addEventListener('click', () => {
+          // Handle click event, e.g., navigate to student details page
+          alert(`Clicked on ${student.student_name}'s card`);
+        });
+        studentList.appendChild(listItem);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error fetching student data');
+      // Handle error, display error message, etc.
+    });
+</script>
+
+</body>
+</html>
