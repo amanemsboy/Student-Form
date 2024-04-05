@@ -143,14 +143,15 @@
     })
     .then(data => {
       alert(data);
-      document.getElementById('studentForm').reset(); // Clear form fields after successful submission
+      document.getElementById('studentForm').reset();
     })
     .catch(error => {
       console.error('Error:', error);
       alert('Error submitting form');
-      // Handle error, display error message, etc.
+
     });
   });
+
 </script>
 
 </body>
