@@ -21,7 +21,6 @@ const mysqlConnection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-gitignore
 app.use(express.json());
 
 mysqlConnection.connect((err) => {

@@ -82,8 +82,8 @@
       <label for="student_gender" class="form-label text-gray-700">Gender:</label>
       <select id="student_gender" name="student_gender" class="form-select" required>
         <option value="" disabled selected>Select gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Memale">Female</option>
       </select>
     </div>
     <div>
@@ -128,7 +128,7 @@
         total_credit_hours: document.getElementById('total_credit_hours').value
       }
     };
-    fetch('http://localhost/student-info', {
+    fetch('http://localhost:3000/student-info', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -153,6 +153,7 @@
   });
 
 </script>
+
 
 </body>
 </html>
